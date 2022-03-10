@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+    <title>Mitchell Jeffrey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mitchell Jeffrey - Personal homepage" />
+
+    <!-- Kube CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="grid">
+        <div class="column column-3">
+            <img src="/img/mug.jpg">
+        </div>
+        <div class="column column-9" style="padding-top: 80px;">
+            <p class="text-giga">Mitchell Lee Jeffrey</p>
+            <p class="text-muted">
+                <i class="fa-solid fa-fw fa-location-pin"></i> &nbsp; Cairns region, Australia<br>
+                <i class="fa-solid fa-fw fa-plane"></i> &nbsp; Previously: Canberra, San Francisco Bay Area<br>
+                <i class="fa-solid fa-fw fa-envelope"></i> &nbsp; <i>(my full name, written above)</i> @gmail.com
+            </p>
+            <p class="text-large">
+                I do science communication, or, playing with the way people understand the world.
+                I also write software and make radio. Let's chat about projects and collaborations.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="grid" style="margin-top: 120px;">
+        <div class="column column-9 column-offset-3">
+            <div class="grid">
+                {% for p in portfolio %}
+                    <div class="column column-4">
+                        <div class="card b-dark-medium bg-light r-base" style="filter: grayscale(1);">
+                            <div class="card-image image-cover">
+                                <img class="r-top-base" src="{{ p.thumb|default('/img/hero.jpg') }}">
+                            </div>
+                            <div class="card-box p-2">
+                                <div class="card-head">
+                                    <h2 class="heading-small heading-normal">
+                                        {{ p.title }}
+                                    </h2>
+                                </div>
+                                <div class="card-body mt-3">
+                                    <p class="text-medium">
+                                        {{ p.blurb }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
