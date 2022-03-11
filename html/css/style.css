@@ -9558,4 +9558,17 @@ body {
   margin-bottom: 20px;
 }
 
+a.card {
+  text-decoration: none;
+}
+
+.zoom {
+  transition: transform 0.1s;
+  filter: grayscale(1);
+}
+
+.zoom:hover {
+  filter: grayscale(0);
+}
+
 /*# sourceMappingURL=style.css.map */

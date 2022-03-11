@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+    <title>Mitchell Jeffrey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mitchell Jeffrey - Personal homepage" />
+
+    <!-- Kube CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="grid mx-4-sm my-4-sm">
+        <div class="column column-6" style="padding-top: 80px;">
+            <p class="text-giga">Mitchell Lee Jeffrey</p>
+            <p class="text-muted">
+                <i class="fa-solid fa-fw fa-location-pin"></i> &nbsp; Cairns region, Australia<br>
+                <i class="fa-solid fa-fw fa-plane"></i> &nbsp; Previously: Canberra, San Francisco Bay Area<br>
+                <i class="fa-solid fa-fw fa-envelope"></i> &nbsp; <i>(my full name, written above)</i> @gmail.com
+            </p>
+            <p class="text-large">
+                I do science communication, or, playing with the way people understand the world.
+                I also write software and make radio. Let's chat about projects and collaborations.
+            </p>
+        </div>
+    </div>
+
+
+    <p class="text-giga" style="margin-top: 80px;">Projects</p>
+    <div class="grid mx-4-sm my-4-sm">
+        {% set style = 'card' %}
+        {% include 'projects/sound.njk' %}
+        {% include 'projects/flight.njk' %}
+        {% include 'projects/magnets.njk' %}
+        {% include 'projects/security.njk' %}
+        {% include 'projects/market.njk' %}
+        {% include 'projects/radio.njk' %}
+    </div>
+
+    <p class="text-giga" style="margin-top: 80px;">Writing</p>
+    <p>Queer Nuns; Guinea Worm</p>
+
+    <p class="text-giga" style="margin-top: 80px;">Education & Employment</p>
+    <ul>
+        <li>MSCO 2021</li>
+        <li>Grad Cert Sci Comm 2020</li>
+        <li>Google 2013-2020</li>
+        <li>B.Sc (Maths, Physics)</li>
+    </ul>
+
+</body>
