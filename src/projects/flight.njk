@@ -1,9 +1,13 @@
 {% extends "project.njk" %}
+
 {% set cardimg = '/img/flight0.jpg' %}
-
-{% block title %}Foldable Flight{% endblock %}
-
-{% block blurb %}
+{% set url = '/projects/flight.html'%}
+{% set title %}Foldable Flight{% endset %}
+{% set blurb %}
     An online interactive workshop for upper primary students that covers the
     basics of flight, including how to fold two paper planes.
+{% endset %}
+
+{% block page %}
+    <h1>Hello Foldable Flight!</h1>
 {% endblock %}

@@ -1,6 +1,6 @@
-{% if style == 'card' %}
+{% if card %}
     <div class="column column-4">
-        <a href="" class="card">
+        <a href="{{ url }}" class="card">
             <div class="card b-dark-medium bg-light r-base zoom">
                 <div class="card-image image-cover">
                     <img class="r-top-base" src="{{ cardimg|default('/img/hero.jpg') }}">
@@ -8,20 +8,23 @@
                 <div class="card-box p-2">
                     <div class="card-head">
                         <h2 class="heading-small heading-normal">
-                            {% block title %}{% endblock %}
+                            {{ title }}
                         </h2>
                     </div>
                     <div class="card-body mt-3">
                         <p class="text-medium">
-                            {% block blurb %}{% endblock %}
+                            {{ blurb }}
                         </p>
                     </div>
                 </div>
             </div>
         </a>
     </div>
-{% endif %}
-
-{% if style == 'page' %}
-    <h1>Page</h1>
+{% else %}
+    {% extends 'base.njk' %}
+    {% block body %}
+        <a href="/" style="">Mitchell Jeffrey</a>
+        <p class="text-giga mt-12 mb-12">{{ title }}</p>
+        {% block page %} {% endblock %}
+    {% endblock %}
 {% endif %}

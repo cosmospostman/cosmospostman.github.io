@@ -1,18 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	
-    <title>Mitchell Jeffrey</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Mitchell Jeffrey - Personal homepage" />
-
-    <!-- Kube CSS -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+{% extends 'base.njk' %}
+{% block body %}
     <div class="grid mx-4-sm my-4-sm">
         <div class="column column-6" style="padding-top: 80px;">
             <p class="text-giga">Mitchell Lee Jeffrey</p>
@@ -28,10 +16,9 @@
         </div>
     </div>
 
-
     <p class="text-giga" style="margin-top: 80px;">Projects</p>
     <div class="grid mx-4-sm my-4-sm">
-        {% set style = 'card' %}
+        {% set card = 'card' %}
         {% include 'projects/sound.njk' %}
         {% include 'projects/flight.njk' %}
         {% include 'projects/magnets.njk' %}
@@ -50,5 +37,4 @@
         <li>Google 2013-2020</li>
         <li>B.Sc (Maths, Physics)</li>
     </ul>
-
-</body>
+{% endblock %}
