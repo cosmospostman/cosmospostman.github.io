@@ -3,7 +3,7 @@
         <a href="{{ url }}" class="card">
             <div class="card b-dark-medium bg-light r-base zoom">
                 <div class="card-image image-cover">
-                    <img class="r-top-base" src="{{ cardimg|default('/img/hero.jpg') }}">
+                    {% block cardimg %}{% endblock %}
                 </div>
                 <div class="card-box p-2">
                     <div class="card-head">

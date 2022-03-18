@@ -1,6 +1,5 @@
 {% extends "project.njk" %}
 
-{% set cardimg = '/img/security0.jpg' %}
 {% set url = '/projects/security.html'%}
 {% set title %}Software Security{% endset %}
 
@@ -8,6 +7,10 @@
     Three lesson plans for senior high school students to explore careers in
     software and security.
 {% endset %}
+
+{% block cardimg %}
+    <img class="r-top-base" src="/img/security0.jpg" style="filter: brightness(1.2);">
+{% endblock %}
 
 {% block page %}
     <div class="grid">
@@ -19,7 +22,12 @@
                 plain facts, stories are far easier to remember and retain, which is what makes them so powerful. I
                 researched what a small sample audience found compelling, and used that to weave in underlying messages,
                 such as how writing code can be like a superpower. (It was the client's responsibility to create the
-                necessary technical material).
+                necessary technical material and train presenters).
+            <p>The client was very pleased with these lesson plans, but as of March 2022 they had not been trialled with
+                a real audience.
+            <p><a target="_blank" class="button" href="/content/PasswordCracking.pdf">
+                <i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;
+                Sample workshop plan: Password Cracking</a>
         </div>
 
         <div class="column column-1"></div>

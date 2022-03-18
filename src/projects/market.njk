@@ -1,6 +1,5 @@
 {% extends "project.njk" %}
 
-{% set cardimg = '/img/stall0.jpg' %}
 {% set url = '/projects/market.html'%}
 {% set title %}Market Stall{% endset %}
 
@@ -8,6 +7,10 @@
     A science outreach project that brings surprise, curiosity and delight to
     community markets, delivered off an ironing board.
 {% endset %}
+
+{% block cardimg %}
+    <img class="r-top-base" src="/img/stall0.jpg" style="filter: brightness(1.2);">
+{% endblock %}
 
 {% block page %}
     <div class="grid">

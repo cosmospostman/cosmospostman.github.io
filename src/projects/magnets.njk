@@ -1,6 +1,5 @@
 {% extends "project.njk" %}
 
-{% set cardimg = '/img/em0.jpg' %}
 {% set url = '/projects/magnets.html'%}
 {% set title %}Magnets & Electricity{% endset %}
 
@@ -8,6 +7,10 @@
     A surprising workshop about how magnets and electricity are connected, and
     how we use them both to do cool and useful things.
 {% endset %}
+
+{% block cardimg %}
+    <img class="r-top-base" src="/img/em0.jpg" style="filter: brightness(1.2);">
+{% endblock %}
 
 {% block page %}
     <div class="grid">
@@ -36,7 +39,7 @@
         <div class="column column-1"></div>
         <div class="column column-3">
             <video controls class="mb-2">
-                <source src="/img/em-demo-reel.mov" type="video/mp4">
+                <source src="/img/em-demo-reel.mp4" type="video/mp4">
             </video>
             <img src="/img/em0.jpg">
             <img src="/img/em1.jpg">

@@ -1,4 +1,11 @@
-@import "node_modules/superkube/superkube/superkube.scss";
+@import "node_modules/superkube/superkube/vars";
+$palette: map-extend($palette, (
+    active: (        
+        dark: #F78C68
+    ),
+));
+@import "node_modules/superkube/superkube/modules";
+
 
 :root {
     --font-text: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
@@ -15,7 +22,11 @@
 
 body {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+a {
+
 }
 
 a.card {
@@ -28,4 +39,24 @@ a.card {
   
 .zoom:hover {
     filter: grayscale(0);
+    filter: brightness(1);
+}
+
+.text-extramuted {
+    color: var(--palette-black-20);
+}
+
+.ref-list {
+    margin-left:32px;
+}
+
+.ref-indent {
+    position: relative;
+    left: -32px;
+    width: 0px;
+    float: left;
+}
+
+.text-serif {
+    font-family: 'Amiri', serif;
 }

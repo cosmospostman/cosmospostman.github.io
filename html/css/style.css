@@ -1,14 +1,4 @@
 @charset "UTF-8";
-/*
-    Superkube
-    Version 2.6.1
-    Updated: January 8, 2022
-
-    http://imperavi.com/superkube/
-
-    Copyright (c) 2022, Imperavi Ltd.
-    License: MIT
-*/
 :root {
   --font-text: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif;
   --font-heading: inherit;
@@ -95,7 +85,7 @@
   --palette-positive-lighter: #DAF1E7;
   --palette-positive-lightest: #F0FAF6;
   --palette-active-darker: #143FA9;
-  --palette-active-dark: #164FDA;
+  --palette-active-dark: #F78C68;
   --palette-active-base: #2F6BFC;
   --palette-active-light: #B2C7FB;
   --palette-active-lighter: #DDE7FD;
@@ -9555,7 +9545,7 @@ hr.line-centered:before {
 }
 body {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 a.card {
@@ -9563,12 +9553,31 @@ a.card {
 }
 
 .zoom {
-  transition: transform 0.1s;
   filter: grayscale(1);
 }
 
 .zoom:hover {
   filter: grayscale(0);
+  filter: brightness(1);
+}
+
+.text-extramuted {
+  color: var(--palette-black-20);
+}
+
+.ref-list {
+  margin-left: 32px;
+}
+
+.ref-indent {
+  position: relative;
+  left: -32px;
+  width: 0px;
+  float: left;
+}
+
+.text-serif {
+  font-family: "Amiri", serif;
 }
 
 /*# sourceMappingURL=style.css.map */
