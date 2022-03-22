@@ -85,7 +85,7 @@
   --palette-positive-lighter: #DAF1E7;
   --palette-positive-lightest: #F0FAF6;
   --palette-active-darker: #143FA9;
-  --palette-active-dark: #F78C68;
+  --palette-active-dark: #FC5D74;
   --palette-active-base: #2F6BFC;
   --palette-active-light: #B2C7FB;
   --palette-active-lighter: #DDE7FD;
@@ -9543,21 +9543,34 @@ hr.line-centered:before {
     margin: 0 auto;
   }
 }
+@media (max-width: 1136px) {
+  body {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
 body {
   margin-top: 20px;
   margin-bottom: 40px;
+  font-family: "Cabin", sans-serif;
 }
 
-a.card {
+a.project-card {
   text-decoration: none;
+  color: var(--text-default);
 }
 
-.zoom {
+.project-card h2 {
+  color: var(--link-default-color);
+}
+.project-card .card-image {
   filter: grayscale(1);
 }
 
-.zoom:hover {
-  filter: grayscale(0);
+.project-card:hover h2 {
+  color: var(--link-hover-color);
+}
+.project-card:hover .card-image {
   filter: brightness(1);
 }
 

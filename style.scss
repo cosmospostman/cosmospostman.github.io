@@ -1,7 +1,7 @@
 @import "node_modules/superkube/superkube/vars";
 $palette: map-extend($palette, (
     active: (        
-        dark: #F78C68
+        dark: #FC5D74
     ),
 ));
 @import "node_modules/superkube/superkube/modules";
@@ -20,26 +20,41 @@ $palette: map-extend($palette, (
     }
 }
 
+@media (max-width: 1136px) {
+    body {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+
 body {
     margin-top: 20px;
     margin-bottom: 40px;
+    font-family: 'Cabin', sans-serif;
 }
 
-a {
-
-}
-
-a.card {
+a.project-card {
     text-decoration: none;
+    color: var(--text-default);
 }
 
-.zoom {
-    filter: grayscale(1);
+.project-card {
+    h2 {
+        color: var(--link-default-color);
+    }
+    .card-image {
+        filter: grayscale(1);
+    }
 }
-  
-.zoom:hover {
-    filter: grayscale(0);
-    filter: brightness(1);
+
+.project-card:hover {
+    h2 {
+        color: var(--link-hover-color);
+    }
+    .card-image {
+        // filter: grayscale(0);
+        filter: brightness(1);
+    }
 }
 
 .text-extramuted {

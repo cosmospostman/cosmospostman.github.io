@@ -1,18 +1,18 @@
 {% if card %}
     <div class="column column-4">
-        <a href="{{ url }}" class="card">
-            <div class="card b-dark-medium bg-light r-base zoom">
+        <a href="{{ url }}" class="project-card">
+            <div class="card b-dark-medium bg-light r-base">
                 <div class="card-image image-cover">
                     {% block cardimg %}{% endblock %}
                 </div>
                 <div class="card-box p-2">
                     <div class="card-head">
-                        <h2 class="heading-small heading-normal">
+                        <h2 class="heading-small heading-normal link mt-2">
                             {{ title }}
                         </h2>
                     </div>
                     <div class="card-body mt-3">
-                        <p class="text-medium">
+                        <p>
                             {{ blurb }}
                         </p>
                     </div>

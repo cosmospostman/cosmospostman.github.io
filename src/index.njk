@@ -1,6 +1,6 @@
 {% extends 'base.njk' %}
 {% block body %}
-    <div class="grid mx-4-sm my-4-sm">
+    <div class="grid">
         <div class="column column-6" style="padding-top: 80px;">
             <p class="text-giga">Mitchell Lee Jeffrey</p>
             <p class="text-muted">
@@ -16,7 +16,7 @@
     </div>
 
     <p class="text-giga" style="margin-top: 80px;">Projects</p>
-    <div class="grid mx-4-sm my-4-sm">
+    <div class="grid">
         {% set card = 'card' %}
         {% include 'projects/sound.njk' %}
         {% include 'projects/flight.njk' %}
@@ -27,11 +27,16 @@
     </div>
 
     <p class="text-giga" style="margin-top: 80px;">Writing</p>
-    <p>Queer Nuns; Guinea Worm</p>
+    <div class="mx-12">
+        <p><span class="text-semibold text-caps"><a href="/writing/queernuns.html">Queer Nuns</a></span>
+            <br>Behaviour Change Theories and the Play Fair! Campaign
+        <p><span class="text-semibold text-caps"><a href="/writing/guineaworm.html">Guinea Worm</a></span>
+            <br>Blurby Blurb
+    </div>
 
     <p class="text-giga" style="margin-top: 80px;">Education & Employment</p>
     <div class="mx-12">
-        <p><span class="text-semibold text-caps">Master of Science Communication (Outreach)</span>
+        <p><span class="text-semibold text-caps"><a href="https://science.anu.edu.au/study/masters/master-science-communication-outreach">Master of Science Communication (Outreach)</a></span>
             <br>Australian National University, 2021
 
         <p><span class="text-semibold text-caps">Graduate Certificate in Science Communication</span>
