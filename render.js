@@ -2,7 +2,7 @@ const nunjucks = require('nunjucks');
 const fs = require('fs');
 const path = require('path');
 
-const outputPath = 'html/';
+const outputPath = 'docs/';
 
 nunjucks.configure('src', { autoescape: true });
 
