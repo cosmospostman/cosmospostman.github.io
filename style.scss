@@ -1,11 +1,25 @@
 @import "node_modules/superkube/superkube/vars";
 $palette: map-extend($palette, (
     active: (        
-        dark: #FC5D74
+        dark: #FC5D74,
+        hover: #d42d21
     ),
 ));
+
 @import "node_modules/superkube/superkube/core";
 @import "node_modules/superkube/superkube/modules";
+
+.button-primary {
+    --button-background-color: var(--palette-active-dark);
+    // --button-border-color: transparent;
+    // --button-color: var(--palette-positive-lightest);
+    --button-hover-background-color: var(--palette-active-hover);
+    // --button-hover-border-color: transparent;
+    // --button-hover-color: var(--palette-positive-lightest);
+    // --button-disabled-background-color: var(--palette-black);
+    // --button-disabled-border-color: transparent;
+    // --button-disabled-color: var(--palette-neutral-lightest);
+}
 
 :root {
     --font-text: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;

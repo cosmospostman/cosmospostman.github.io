@@ -70,6 +70,7 @@
   --palette-active-light: #C7D2FE;
   --palette-active-lighter: #E8ECFE;
   --palette-active-lightest: #F4F6FF;
+  --palette-active-hover: #d42d21;
   --palette-red-darker: #A30109;
   --palette-red-dark: #E6000A;
   --palette-red-base: #FF424D;
@@ -8873,6 +8874,11 @@ caption {
 
 .text-primary {
   --text-color: var(--palette-primary-base);
+}
+
+.button-primary {
+  --button-background-color: var(--palette-active-dark);
+  --button-hover-background-color: var(--palette-active-hover);
 }
 
 :root {
