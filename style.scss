@@ -4,8 +4,8 @@ $palette: map-extend($palette, (
         dark: #FC5D74
     ),
 ));
+@import "node_modules/superkube/superkube/core";
 @import "node_modules/superkube/superkube/modules";
-
 
 :root {
     --font-text: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;

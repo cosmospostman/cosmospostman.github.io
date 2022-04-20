@@ -1,7 +1,7 @@
 {
   "name": "cosmospostman.github.io",
   "devDependencies": {
-    "superkube": "2.6.1",
+    "superkube": "3.2.0",
     "nunjucks": "3.2.3"
   }
 }
