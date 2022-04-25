@@ -79,6 +79,12 @@ a.project-card {
     margin-left:32px;
 }
 
+.ref-list-by-author li {
+    list-style-type: none;
+    margin-left: 32px;
+    text-indent: -32px;
+}
+
 .ref-indent {
     position: relative;
     left: -32px;
