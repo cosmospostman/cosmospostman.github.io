@@ -23,9 +23,11 @@ function renderProject(templateName) {
 }
 
 render('index');
+renderProject('projects/election');
 renderProject('projects/flight');
 renderProject('projects/magnets');
 renderProject('projects/market');
+renderProject('projects/mushroom');
 renderProject('projects/radio');
 renderProject('projects/security');
 renderProject('projects/sound');
