@@ -35,3 +35,4 @@ renderProject('writing/queernuns');
 renderProject('writing/guineaworm');
 renderProject('writing/psychpsych');
 renderProject('writing/lightshipbaskets');
+renderProject('writing/wonkyholes');
