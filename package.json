@@ -1,7 +1,18 @@
 {
   "name": "cosmospostman.github.io",
+  "scripts": {
+    "build:css": "sass style.scss docs/css/style.css",
+    "build:html": "node render.js",
+    "build": "npm run build:css && npm run build:html",
+    "watch:css": "sass --watch style.scss docs/css/style.css",
+    "watch:html": "node --watch render.js",
+    "serve": "npx http-server docs -p 8000",
+    "dev": "npm run build && concurrently \"npm run watch:css\" \"npm run watch:html\" \"npm run serve\""
+  },
   "devDependencies": {
-    "superkube": "3.2.0",
-    "nunjucks": "3.2.3"
+    "concurrently": "^9.0.0",
+    "nunjucks": "3.2.4",
+    "sass": "^1.79.6",
+    "superkube": "3.2.0"
   }
 }
