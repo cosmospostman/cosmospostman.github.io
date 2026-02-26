@@ -71,7 +71,7 @@ The custom domain (hello-mlj.net) is configured via the `CNAME` file.
 
 | Tool | Purpose |
 |---|---|
-| [Nunjucks 3.2.3](https://mozilla.github.io/nunjucks/) | Template engine |
+| [Nunjucks 3.2.4](https://mozilla.github.io/nunjucks/) | Template engine |
 | [Superkube 3.2.0](https://superkube.dev) | CSS framework |
 | [Sass](https://sass-lang.com) | SCSS compilation |
 | [concurrently](https://github.com/open-cli-tools/concurrently) | Parallel watch tasks in dev |
