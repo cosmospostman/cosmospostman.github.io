@@ -1,30 +1,18 @@
 {% if card %}
-    <div class="column column-4">
-        <a href="{{ url }}" class="project-card">
-            <div class="card b-dark-medium bg-light r-base">
-                <div class="card-image image-cover">
-                    {% block cardimg %}{% endblock %}
-                </div>
-                <div class="card-box p-2">
-                    <div class="card-head">
-                        <h2 class="heading-small heading-normal link mt-2">
-                            {{ title }}
-                        </h2>
-                    </div>
-                    <div class="card-body mt-3">
-                        <p>
-                            {{ blurb }}
-                        </p>
-                    </div>
-                </div>
+    <a href="{{ url }}" class="project-card">
+        <article>
+            <div class="project-image">
+                {% block cardimg %}{% endblock %}
             </div>
-        </a>
-    </div>
+            <h2>{{ title }}</h2>
+            <p>{{ blurb }}</p>
+        </article>
+    </a>
 {% else %}
     {% extends 'base.njk' %}
     {% block body %}
-        <a href="/" style="">Mitchell Jeffrey</a>
-        <p class="text-giga mt-12 mb-12">{{ title }}</p>
+        <a href="/">Mitchell Jeffrey</a>
+        <h1 style="margin-top: 3rem; margin-bottom: 3rem;">{{ title }}</h1>
         {% block page %} {% endblock %}
     {% endblock %}
 {% endif %}

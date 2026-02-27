@@ -27,7 +27,7 @@ docs/             # Generated static HTML (committed, served by GitHub Pages)
   img/            # Images
   audio/          # Audio files
   content/        # PDFs (resume, papers)
-style.scss        # SCSS stylesheet (uses Superkube framework)
+style.scss        # SCSS stylesheet (uses Pico CSS framework)
 render.js         # Build script — renders all templates to docs/
 ```
 
@@ -72,7 +72,7 @@ The custom domain (hello-mlj.net) is configured via the `CNAME` file.
 | Tool | Purpose |
 |---|---|
 | [Nunjucks 3.2.4](https://mozilla.github.io/nunjucks/) | Template engine |
-| [Superkube 3.2.0](https://superkube.dev) | CSS framework |
+| [Pico CSS v2](https://picocss.com) | CSS framework |
 | [Sass](https://sass-lang.com) | SCSS compilation |
 | [concurrently](https://github.com/open-cli-tools/concurrently) | Parallel watch tasks in dev |
 | GitHub Pages | Hosting (`docs/` on `main`) |

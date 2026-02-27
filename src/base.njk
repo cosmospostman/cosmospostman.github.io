@@ -13,7 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cabin:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">    
 </head>
 <body>
-    {% block body %}{% endblock %}
-    {% include body + '.njk' ignore missing %}
-    <p class="mt-12 text-tiny text-extramuted">Copyright © Mitchell Jeffrey 2024</p>
+    <main class="container">
+        {% block body %}{% endblock %}
+        {% include body + '.njk' ignore missing %}
+        <footer><small class="text-muted">Copyright © Mitchell Jeffrey 2024</small></footer>
+    </main>
 </body>

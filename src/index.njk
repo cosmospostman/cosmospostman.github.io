@@ -1,29 +1,29 @@
 {% extends 'base.njk' %}
 {% block body %}
     <div class="grid">
-        <div class="column column-6" style="padding-top: 80px;">
-            <p class="text-giga">Mitchell <span class="text-caps">Jeffrey</span></p>
-            <p class="text-muted text-large">
+        <div style="padding-top: 80px;">
+            <h1>Mitchell <span class="text-caps">Jeffrey</span></h1>
+            <p class="text-muted">
                 <i class="fa-solid fa-fw fa-location-pin"></i> &nbsp; Cairns region, Australia<br>
-                <i class="fa-solid fa-fw fa-plane"></i> &nbsp; Previously: Canberra; San Francisco Bay Area<br>              
+                <i class="fa-solid fa-fw fa-plane"></i> &nbsp; Previously: Canberra; San Francisco Bay Area<br>
             </p>
-            <p class="text-large">
+            <p>
                 I'm a science communicator. I use evidence, but also emotion, to help people understand the world in new ways.
                 I also write software and make radio. Previously, I kept software systems running reliably for Google.
                 Let's chat about projects and collaborations.
             </p>
             <p>
-                <a target="_blank" class="button button-primary" href="https://forms.gle/M2tuttk7KmpwBPrS6">
+                <a target="_blank" role="button" href="https://forms.gle/M2tuttk7KmpwBPrS6">
                     <i class="fa-solid fa-fw fa-envelope"></i>&nbsp;&nbsp;
                     Contact me</a>&nbsp;&nbsp;
-                <a target="_blank" class="button" href="/content/jeffrey-resume-2022.pdf">
+                <a target="_blank" role="button" class="secondary outline" href="/content/jeffrey-resume-2022.pdf">
                     <i class="fa-solid fa-fw fa-file-pdf"></i>&nbsp;&nbsp;
                     View Résumé</a>
             </p>
         </div>
     </div>
 
-    <p class="text-giga" style="margin-top: 80px;">Projects</p>
+    <h2 style="margin-top: 80px;">Projects</h2>
     <div class="grid">
         {% set card = 'card' %}
         {% include 'projects/sound.njk' %}
@@ -36,66 +36,76 @@
         {% include 'projects/radio.njk' %}
     </div>
 
-    <p class="text-giga" style="margin-top: 80px;">Writing</p>
-    <div class="mx-12">
-        <p class="text-large">
+    <h2 style="margin-top: 80px;">Writing</h2>
+    <div>
+        <p>
             I arrange words for enjoyable reading.
             Have me research and synthesise topics I'm unfamiliar with, such as: sex, drugs or parasites.
-        
-        <p><span class="text-semibold text-caps"><a href="/writing/wonkyholes.html">Wonky Holes</a></span>
-            <br><i>(Double Helix issue 71; also adapted as a guest seminar in <a href="https://portal.cca.edu/courses/sec/WRLIT-2100-2_AP_Spring_2024/">
-            Writing and Literature</a> at California College of the Arts)</i>
+        </p>
+        <p><strong><span class="text-caps"><a href="/writing/wonkyholes.html">Wonky Holes</a></span></strong>
+            <br><em>(Double Helix issue 71; also adapted as a guest seminar in <a href="https://portal.cca.edu/courses/sec/WRLIT-2100-2_AP_Spring_2024/">
+            Writing and Literature</a> at California College of the Arts)</em>
             <br>A fishing yarn tells of giant vents of fresh water on the ocean floor.
-        <p><span class="text-semibold text-caps"><a href="/writing/lightshipbaskets.html">Space Craft: Lightship Basket Weaving</a></span>
-            <br><i>(Double Helix issue 69)</i> Astronaut Dan Bursch made baskets in space. You can make them at home!
-        <p><span class="text-semibold text-caps"><a href="/writing/psychpsych.html">Psychedelic Psychotherapy</a></span>
+        </p>
+        <p><strong><span class="text-caps"><a href="/writing/lightshipbaskets.html">Space Craft: Lightship Basket Weaving</a></span></strong>
+            <br><em>(Double Helix issue 69)</em> Astronaut Dan Bursch made baskets in space. You can make them at home!
+        </p>
+        <p><strong><span class="text-caps"><a href="/writing/psychpsych.html">Psychedelic Psychotherapy</a></span></strong>
             <br>Is the double-blind, randomised control clinical trial universally suitable for examining all claims?
-        <p><span class="text-semibold text-caps"><a href="/writing/queernuns.html">Queer Nuns</a></span>
+        </p>
+        <p><strong><span class="text-caps"><a href="/writing/queernuns.html">Queer Nuns</a></span></strong>
             <br>Behaviour Change Theories and the Play Fair! Campaign
-        <p><span class="text-semibold text-caps"><a href="/writing/guineaworm.html">Guinea Worm</a></span>
+        </p>
+        <p><strong><span class="text-caps"><a href="/writing/guineaworm.html">Guinea Worm</a></span></strong>
             <br>Modern efforts to eradicate an ancient parasite
+        </p>
     </div>
 
-    <p class="text-giga" style="margin-top: 80px;">Bespoke Content for Schools</p>
-    <div class="mx-12">
-        <p class="text-large">Let me build a presentation or workshop based on your students' needs
+    <h2 style="margin-top: 80px;">Bespoke Content for Schools</h2>
+    <div>
+        <p>Let me build a presentation or workshop based on your students' needs
             and interests. I can bring relevance and perspective to your classroom content &mdash; tell me what you'd like
             covered or just point to sections of the Australian Curriculum you're visiting this semester.
-        <p class="text-large">While I can work with any subject matter, my personal strengths are in maths, physics 
-            (light, sound, forces & energy), computer science & software engineering, the nature of science and how we
-            know & discover things.
+        </p>
+        <p>While I can work with any subject matter, my personal strengths are in maths, physics
+            (light, sound, forces &amp; energy), computer science &amp; software engineering, the nature of science and how we
+            know &amp; discover things.
+        </p>
     </div>
 
-        <p class="text-giga" style="margin-top: 80px;">For Researchers & Institutions</p>
-    <div class="mx-12">
-        <p class="text-large">
+    <h2 style="margin-top: 80px;">For Researchers &amp; Institutions</h2>
+    <div>
+        <p>
             Your work or research can, and should, meaningfully touch communities beyond paywalled journal publications
             and fleeting broadcast media splashes. There's lots to love about community engagement and participation:
-            <ul class="text-large pl-8">
-                <li>Building sentimental & financial support for your work</li>
-                <li>Fostering trust in science broadly in our communities</li>
-                <li>Opening up to the needs and views of others to inform your work</li>
-                <li>Making it easy to persuade or influence, or inform policy, should your research suggest so</li>
-            </ul>
-        <p class="text-large">
+        </p>
+        <ul>
+            <li>Building sentimental &amp; financial support for your work</li>
+            <li>Fostering trust in science broadly in our communities</li>
+            <li>Opening up to the needs and views of others to inform your work</li>
+            <li>Making it easy to persuade or influence, or inform policy, should your research suggest so</li>
+        </ul>
+        <p>
             I can inspire you to broaden your research impact and build your capacity to do so. Or, if your time is
             limited, I can develop and deliver novel experiential content based on your work and then tell your story
             during my own outreach. Let's discuss the possibilities.
+        </p>
     </div>
 
-    <p class="text-giga" style="margin-top: 80px;">Education & Employment</p>
-    <div class="mx-12">
-        <p><span class="text-semibold text-caps"><a href="https://science.anu.edu.au/study/masters/master-science-communication-outreach">Master of Science Communication (Outreach)</a></span>
+    <h2 style="margin-top: 80px;">Education &amp; Employment</h2>
+    <div>
+        <p><strong><span class="text-caps"><a href="https://science.anu.edu.au/study/masters/master-science-communication-outreach">Master of Science Communication (Outreach)</a></span></strong>
             <br>Australian National University, 2021
-
-        <p><span class="text-semibold text-caps">Graduate Certificate in Science Communication</span>
+        </p>
+        <p><strong><span class="text-caps">Graduate Certificate in Science Communication</span></strong>
             <br>Australian National University, 2020
-
-        <p><span class="text-semibold text-caps">Software Engineer; Site Reliability Engineer</span>
+        </p>
+        <p><strong><span class="text-caps">Software Engineer; Site Reliability Engineer</span></strong>
             <br>Google. My Maps, Traffic Control SRE, Spanner SRE. 2013-2020
-
-        <p><span class="text-semibold text-caps">B.Sc (Mathematics, Physics)</span>
+        </p>
+        <p><strong><span class="text-caps">B.Sc (Mathematics, Physics)</span></strong>
             <br>2011
+        </p>
     </div>
 
 {% endblock %}
