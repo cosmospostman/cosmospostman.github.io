@@ -3,7 +3,8 @@
   "scripts": {
     "build:css": "sass style.scss docs/css/style.css",
     "build:html": "node render.js",
-    "build": "npm run build:css && npm run build:html",
+    "build:icons": "cp node_modules/@phosphor-icons/web/src/regular/style.css docs/css/phosphor.css && cp node_modules/@phosphor-icons/web/src/regular/Phosphor.woff2 docs/css/Phosphor.woff2 && cp node_modules/@phosphor-icons/web/src/regular/Phosphor.woff docs/css/Phosphor.woff && cp node_modules/@phosphor-icons/web/src/regular/Phosphor.ttf docs/css/Phosphor.ttf",
+    "build": "npm run build:css && npm run build:icons && npm run build:html",
     "watch:css": "sass --watch style.scss docs/css/style.css",
     "watch:html": "node --watch render.js",
     "serve": "npx http-server docs -p 8000",
@@ -14,5 +15,8 @@
     "concurrently": "^9.0.0",
     "nunjucks": "3.2.4",
     "sass": "^1.97.0"
+  },
+  "dependencies": {
+    "@phosphor-icons/web": "^2.1.2"
   }
 }
