@@ -15,7 +15,6 @@
 <body>
     <main class="container">
         {% block body %}{% endblock %}
-        {% include body + '.njk' ignore missing %}
-        <footer class="site-footer"><small>Copyright © Mitchell Jeffrey 2026</small></footer>
+        <footer class="site-footer"><small>Copyright © Mitchell Jeffrey {{ year }}</small></footer>
     </main>
 </body>

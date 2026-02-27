@@ -4,7 +4,10 @@ const path = require('path');
 
 const outputPath = 'docs/';
 
-nunjucks.configure('src', { autoescape: true });
+const env = nunjucks.configure('src', { autoescape: true });
+env.addGlobal('year', new Date().getFullYear());
+env.addGlobal('writing', require('./src/_data/writing.json'));
+env.addGlobal('projects', require('./src/_data/projects.json'));
 
 function render(templateName) {
     fs.writeFileSync(
@@ -13,26 +16,19 @@ function render(templateName) {
     );
 }
 
-function renderProject(templateName) {
-    dirname = path.dirname(templateName);
-    fs.mkdirSync(outputPath + dirname, { recursive: true });
-    fs.writeFileSync(
-        outputPath + templateName + '.html',
-        nunjucks.render(templateName + '.njk')
-    );
+function renderDir(dirName) {
+    fs.mkdirSync(outputPath + dirName, { recursive: true });
+    const files = fs.readdirSync('src/' + dirName);
+    for (const file of files) {
+        if (!file.endsWith('.njk')) continue;
+        const stem = path.basename(file, '.njk');
+        fs.writeFileSync(
+            outputPath + dirName + '/' + stem + '.html',
+            nunjucks.render(dirName + '/' + file)
+        );
+    }
 }
 
 render('index');
-renderProject('projects/election');
-renderProject('projects/flight');
-renderProject('projects/magnets');
-renderProject('projects/market');
-renderProject('projects/mushroom');
-renderProject('projects/radio');
-renderProject('projects/security');
-renderProject('projects/sound');
-renderProject('writing/queernuns');
-renderProject('writing/guineaworm');
-renderProject('writing/psychpsych');
-renderProject('writing/lightshipbaskets');
-renderProject('writing/wonkyholes');
+renderDir('projects');
+renderDir('writing');

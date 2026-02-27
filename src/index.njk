@@ -1,7 +1,7 @@
 {% extends 'base.njk' %}
 {% block body %}
     <div class="grid grid-hero">
-        <div style="padding-top: 80px;">
+        <div class="hero-content">
             <h1>Mitchell <span class="text-caps">Jeffrey</span></h1>
             <p class="text-muted">
                 <i class="ph ph-map-pin"></i> &nbsp; Cairns region, Australia<br>
@@ -19,45 +19,29 @@
         </div>
     </div>
 
-    <h2 style="margin-top: 80px;">Projects</h2>
+    <h2 class="section-heading">Projects</h2>
     <div class="grid grid-projects">
         {% set card = 'card' %}
-        {% include 'projects/sound.njk' %}
-        {% include 'projects/flight.njk' %}
-        {% include 'projects/magnets.njk' %}
-        {% include 'projects/security.njk' %}
-        {% include 'projects/market.njk' %}
-        {% include 'projects/mushroom.njk' %}
-        {% include 'projects/election.njk' %}
-        {% include 'projects/radio.njk' %}
+        {% for slug in projects %}
+        {% include 'projects/' + slug + '.njk' %}
+        {% endfor %}
     </div>
 
-    <h2 style="margin-top: 80px;">Writing</h2>
+    <h2 class="section-heading">Writing</h2>
     <div class="section-body">
         <p>
             I arrange words for enjoyable reading.
             Have me research and synthesise topics I'm unfamiliar with, such as: sex, drugs or parasites.
         </p>
-        <p><strong><span class="text-caps"><a href="/writing/wonkyholes.html">Wonky Holes</a></span></strong>
-            <br><em>(Double Helix issue 71; also adapted as a guest seminar in <a href="https://portal.cca.edu/courses/sec/WRLIT-2100-2_AP_Spring_2024/">
-            Writing and Literature</a> at California College of the Arts)</em>
-            <br>A fishing yarn tells of giant vents of fresh water on the ocean floor.
+        {% for article in writing %}
+        <p><strong><span class="text-caps"><a href="{{ article.url }}">{{ article.title }}</a></span></strong>
+            {% if article.publication %}<br><em>{{ article.publication | safe }}</em>{% endif %}
+            <br>{{ article.description }}
         </p>
-        <p><strong><span class="text-caps"><a href="/writing/lightshipbaskets.html">Space Craft: Lightship Basket Weaving</a></span></strong>
-            <br><em>(Double Helix issue 69)</em> Astronaut Dan Bursch made baskets in space. You can make them at home!
-        </p>
-        <p><strong><span class="text-caps"><a href="/writing/psychpsych.html">Psychedelic Psychotherapy</a></span></strong>
-            <br>Is the double-blind, randomised control clinical trial universally suitable for examining all claims?
-        </p>
-        <p><strong><span class="text-caps"><a href="/writing/queernuns.html">Queer Nuns</a></span></strong>
-            <br>Behaviour Change Theories and the Play Fair! Campaign
-        </p>
-        <p><strong><span class="text-caps"><a href="/writing/guineaworm.html">Guinea Worm</a></span></strong>
-            <br>Modern efforts to eradicate an ancient parasite
-        </p>
+        {% endfor %}
     </div>
 
-    <h2 style="margin-top: 80px;">Bespoke Content for Schools</h2>
+    <h2 class="section-heading">Bespoke Content for Schools</h2>
     <div class="section-body">
         <p>Let me build a presentation or workshop based on your students' needs
             and interests. I can bring relevance and perspective to your classroom content &mdash; tell me what you'd like
@@ -69,7 +53,7 @@
         </p>
     </div>
 
-    <h2 style="margin-top: 80px;">For Researchers &amp; Institutions</h2>
+    <h2 class="section-heading">For Researchers &amp; Institutions</h2>
     <div class="section-body">
         <p>
             Your work or research can, and should, meaningfully touch communities beyond paywalled journal publications
@@ -88,7 +72,7 @@
         </p>
     </div>
 
-    <h2 style="margin-top: 80px;">Education &amp; Employment</h2>
+    <h2 class="section-heading">Education &amp; Employment</h2>
     <div class="section-body">
         <p><strong><span class="text-caps"><a href="https://programsandcourses.anu.edu.au/2021/program/7624xmsco">Master of Science Communication (Outreach)</a></span></strong>
             <br>Australian National University, 2021

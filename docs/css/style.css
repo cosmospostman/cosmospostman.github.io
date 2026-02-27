@@ -2847,6 +2847,27 @@ body {
   margin-bottom: 40px;
 }
 
+.hero-content {
+  padding-top: 80px;
+}
+
+.section-heading {
+  margin-top: 80px;
+}
+
+.project-heading {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+audio {
+  width: 100%;
+}
+
 .grid-hero {
   grid-template-columns: 1fr;
 }
@@ -2911,6 +2932,7 @@ a.project-card .project-image {
 a.project-card .project-image img {
   display: block;
   width: 100%;
+  filter: brightness(1.2);
   transition: transform var(--pico-transition);
 }
 a.project-card:hover h2 {

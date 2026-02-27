@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "wonkyholes",
+    "title": "Wonky Holes",
+    "url": "/writing/wonkyholes.html",
+    "publication": "Double Helix issue 71; also adapted as a guest seminar in <a href=\"https://portal.cca.edu/courses/sec/WRLIT-2100-2_AP_Spring_2024/\">Writing and Literature</a> at California College of the Arts",
+    "description": "A fishing yarn tells of giant vents of fresh water on the ocean floor."
+  },
+  {
+    "slug": "lightshipbaskets",
+    "title": "Space Craft: Lightship Basket Weaving",
+    "url": "/writing/lightshipbaskets.html",
+    "publication": "Double Helix issue 69",
+    "description": "Astronaut Dan Bursch made baskets in space. You can make them at home!"
+  },
+  {
+    "slug": "psychpsych",
+    "title": "Psychedelic Psychotherapy",
+    "url": "/writing/psychpsych.html",
+    "publication": null,
+    "description": "Is the double-blind, randomised control clinical trial universally suitable for examining all claims?"
+  },
+  {
+    "slug": "queernuns",
+    "title": "Queer Nuns",
+    "url": "/writing/queernuns.html",
+    "publication": null,
+    "description": "Behaviour Change Theories and the Play Fair! Campaign"
+  },
+  {
+    "slug": "guineaworm",
+    "title": "Guinea Worm",
+    "url": "/writing/guineaworm.html",
+    "publication": null,
+    "description": "Modern efforts to eradicate an ancient parasite"
+  }
+]
