@@ -98,6 +98,11 @@ audio { width: 100%; }
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        min-width: 0;
+
+        video {
+            max-width: 100%;
+        }
     }
 }
 
@@ -177,6 +182,15 @@ a[role="button"] {
 .site-footer {
     margin-top: 5rem;
     small { color: color-mix(in srgb, var(--pico-muted-color) 50%, transparent); font-size: 0.75rem; }
+}
+
+// Markdoc wraps content in <article> — strip Pico's card styles so it flows inline
+.text-serif > article {
+    margin-bottom: 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
 }
 
 // Indented section body, matching live site mx-12 pattern

@@ -17,6 +17,9 @@
     "sass": "^1.97.0"
   },
   "dependencies": {
-    "@phosphor-icons/web": "^2.1.2"
+    "@markdoc/markdoc": "^0.5.4",
+    "@phosphor-icons/web": "^2.1.2",
+    "gray-matter": "^4.0.3",
+    "marked": "^17.0.3"
   }
 }

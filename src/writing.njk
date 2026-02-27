@@ -1,0 +1,19 @@
+{% extends 'base.njk' %}
+{% block body %}
+    <a href="/">Mitchell Jeffrey</a>
+    <h1 class="project-heading">{{ title }}</h1>
+    {% if publication %}
+    <p><em class="text-muted">{{ publication | safe }}</em></p>
+    {% endif %}
+    <div class="layout-sidebar">
+        <div class="text-serif">
+            {{ content | safe }}
+        </div>
+        <div></div>
+        <div>
+            {% for img in images %}
+            <img src="{{ img }}" />
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
