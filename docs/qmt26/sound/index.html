@@ -65,8 +65,6 @@
     }
 
     #app {
-      height: 100dvh;
-      height: 100vh; /* fallback */
       display: flex;
       flex-direction: column;
       padding: var(--pad);
@@ -354,7 +352,30 @@
       padding-bottom: 2px;
     }
 
-    /* ── Landscape / short screens ── */
+    /* ── Rotation wrapper ── */
+    #rotator {
+      position: fixed;
+      inset: 0;
+    }
+
+    /* Portrait: rotate the content 90° so it always renders landscape */
+    @media (orientation: portrait) {
+      #rotator {
+        width: 100vh;
+        height: 100vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+        transform-origin: center center;
+      }
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Short screens (true landscape or post-rotation) ── */
     @media (max-height: 520px) {
       :root { --touch: 60px; --gap: 6px; --pad: 8px; }
       #display { min-height: 60px; padding: 8px 16px; }
@@ -364,6 +385,7 @@
   </style>
 </head>
 <body>
+  <div id="rotator">
   <div id="app">
     <div id="display" role="button" tabindex="0" aria-label="Play tone">
       <div id="freq-line">
@@ -384,6 +406,7 @@
     </div>
 
     <div id="hint">TAP preset to recall &nbsp;&middot;&nbsp; HOLD 1s to save or clear</div>
+  </div>
   </div>
 
   <script>
