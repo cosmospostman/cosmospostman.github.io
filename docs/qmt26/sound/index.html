@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0a0e0f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Chladni Tone Generator</title>
+  <style>
+    :root {
+      --bg:           #0a0e0f;
+      --surface:      #111618;
+      --mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+      --touch: 80px;
+      --r: 10px;
+      --gap: 12px;
+      --pad: 16px;
+
+      /* Accent */
+      --accent:       #00e5a0;
+      --accent-glow:  rgba(0, 229, 160, 0.28);
+
+      /* State tokens */
+      --s-inactive-bg:      #0d1315;
+      --s-inactive-border:  #182224;
+      --s-inactive-text:    #2e4a44;
+
+      --s-enabled-bg:       var(--surface);
+      --s-enabled-border:   #2a4a42;
+      --s-enabled-text:     var(--accent);
+
+      --s-hover-bg:         #131e1c;
+      --s-hover-border:     #3a6a5a;
+      --s-hover-glow:       0 0 12px rgba(0, 229, 160, 0.18);
+
+      --s-active-bg:        var(--accent);
+      --s-active-border:    var(--accent);
+      --s-active-text:      var(--bg);
+      --s-active-glow:      0 0 28px rgba(0, 229, 160, 0.55);
+
+      --text-muted:         #4a7a6e;
+      --text:               #7ab8a8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 100;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+      );
+    }
+
+    #app {
+      height: 100dvh;
+      height: 100vh; /* fallback */
+      display: flex;
+      flex-direction: column;
+      padding: var(--pad);
+      gap: var(--gap);
+    }
+
+    /* ── Hero display (tap to play/stop) ── */
+    #display {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7em;
+      /* resting = hover state */
+      background: var(--s-hover-bg);
+      border: 1px solid var(--s-hover-border);
+      box-shadow: var(--s-hover-glow);
+      border-radius: var(--r);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    #display:active:not(.playing) {
+      background: var(--s-inactive-bg);
+      border-color: var(--s-enabled-border);
+      box-shadow: none;
+    }
+
+    #display.playing {
+      background: var(--s-active-bg);
+      border-color: var(--s-active-border);
+      animation: pulse-glow 2.5s ease-in-out infinite;
+    }
+
+    #display.playing #freq-readout {
+      color: var(--s-active-text);
+      text-shadow: none;
+    }
+
+    #display.playing #freq-unit {
+      color: var(--s-active-text);
+      opacity: 0.6;
+    }
+
+    #display.playing #play-label {
+      color: var(--s-active-text);
+    }
+
+    #freq-line {
+      display: flex;
+      align-items: baseline;
+      gap: 0.2em;
+    }
+
+    #freq-readout {
+      font-size: clamp(3rem, 13vw, 7rem);
+      font-weight: 300;
+      color: var(--accent);
+      text-shadow: 0 0 24px var(--accent-glow);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s;
+    }
+
+    #freq-unit {
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
+      color: #7ab8a8;
+      font-weight: 300;
+    }
+
+    #play-label {
+      font-size: clamp(1.2rem, 3.5vw, 2rem);
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: #7ab8a8;
+      transition: color 0.15s;
+    }
+
+
+    /* ── Slider row ── */
+    #slider-row {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nudge {
+      flex: 0 0 var(--touch);
+      height: var(--touch);
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border-radius: var(--r);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s, border-color 0.1s, box-shadow 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* enabled state */
+      background: var(--s-enabled-bg);
+      color: var(--s-enabled-text);
+      border: 1px solid var(--s-enabled-border);
+    }
+
+    .nudge:hover {
+      background: var(--s-hover-bg);
+      border-color: var(--s-hover-border);
+      box-shadow: var(--s-hover-glow);
+    }
+
+    .nudge:active {
+      background: var(--s-inactive-bg);
+      border-color: var(--s-enabled-border);
+      box-shadow: none;
+    }
+
+    .nudge:disabled {
+      background: var(--s-inactive-bg);
+      color: var(--s-inactive-text);
+      border-color: var(--s-inactive-border);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    #freq-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      background: linear-gradient(
+        to right,
+        var(--accent) 0%,
+        var(--accent) var(--fill-pct, 50%),
+        #2e5a50 var(--fill-pct, 50%),
+        #2e5a50 100%
+      );
+    }
+
+    #freq-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent-glow), 0 0 4px var(--accent);
+      cursor: grab;
+      transition: transform 0.1s;
+    }
+
+    #freq-slider:active::-webkit-slider-thumb {
+      cursor: grabbing;
+      transform: scale(1.1);
+    }
+
+    #freq-slider::-moz-range-thumb {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent-glow);
+      cursor: grab;
+    }
+
+    /* ── Favourites row ── */
+    #favourites-row {
+      flex: 0 0 auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .fav-btn {
+      flex: 1;
+      height: var(--touch);
+      font-family: var(--mono);
+      border-radius: var(--r);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+      /* inactive state (unset) */
+      background: var(--s-inactive-bg);
+      color: var(--s-inactive-text);
+      border: 1px solid var(--s-inactive-border);
+    }
+
+    .fav-btn.set {
+      /* enabled state (set, not selected) */
+      background: var(--s-enabled-bg);
+      color: var(--s-enabled-text);
+      border-color: var(--s-enabled-border);
+    }
+
+    .fav-btn.set:hover:not(.active) {
+      background: var(--s-hover-bg);
+      border-color: var(--s-hover-border);
+      box-shadow: var(--s-hover-glow);
+    }
+
+    .fav-btn.active {
+      /* active state (selected frequency) */
+      background: var(--s-active-bg);
+      color: var(--s-active-text);
+      border-color: var(--s-active-border);
+      box-shadow: var(--s-active-glow);
+    }
+
+    .fav-btn:active:not(.active) {
+      background: var(--s-inactive-bg);
+      box-shadow: none;
+    }
+
+    .fav-star {
+      font-size: 2.2rem;
+      line-height: 1;
+      position: relative;
+      top: -0.1em;
+    }
+
+    .fav-freq {
+      font-size: 1.7rem;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @keyframes save-flash {
+      0%   { box-shadow: 0 0 0 3px var(--accent); }
+      100% { box-shadow: none; }
+    }
+
+    .fav-btn.saved {
+      animation: save-flash 0.5s ease-out forwards;
+    }
+
+    /* Hold progress bar */
+    .fav-btn .hold-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 0 0 0 var(--r);
+      transition: none;
+    }
+
+    .fav-btn.holding .hold-bar {
+      animation: hold-fill 1s linear forwards;
+    }
+
+    @keyframes hold-fill {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    /* ── Play button ── */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+      50%       { box-shadow: 0 0 50px rgba(0,229,160,0.5); }
+    }
+
+    /* ── Hint line ── */
+    #hint {
+      flex: 0 0 auto;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      padding-bottom: 2px;
+    }
+
+    /* ── Landscape / short screens ── */
+    @media (max-height: 520px) {
+      :root { --touch: 60px; --gap: 6px; --pad: 8px; }
+      #display { min-height: 60px; padding: 8px 16px; }
+      #freq-readout { font-size: clamp(2rem, 8vh, 3.5rem); }
+      #hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="display" role="button" tabindex="0" aria-label="Play tone">
+      <div id="freq-line">
+        <span id="freq-readout">440</span>
+        <span id="freq-unit">Hz</span>
+      </div>
+      <span id="play-label">PLAY</span>
+    </div>
+
+    <div id="favourites-row"></div>
+
+    <div id="slider-row">
+      <button class="nudge" id="btn-oct-down" aria-label="Octave down">&laquo;</button>
+      <button class="nudge" id="btn-step-down" aria-label="-1 Hz">&lsaquo;</button>
+      <input type="range" id="freq-slider" min="0" max="1000" value="447" aria-label="Frequency">
+      <button class="nudge" id="btn-step-up" aria-label="+1 Hz">&rsaquo;</button>
+      <button class="nudge" id="btn-oct-up" aria-label="Octave up">&raquo;</button>
+    </div>
+
+    <div id="hint">TAP preset to recall &nbsp;&middot;&nbsp; HOLD 1s to save or clear</div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // ── Constants ────────────────────────────────────────────────────────────
+
+    const FREQ_MIN   = 20;
+    const FREQ_MAX   = 20000;
+    const SLIDER_MAX = 1000;
+    const HOLD_MS    = 1000;
+    const LS_KEY     = 'qmt26-favourites';
+    const FAV_SLOTS  = 6;
+
+    // ── State ────────────────────────────────────────────────────────────────
+
+    const state = {
+      freq:       440,
+      playing:    false,
+      favourites: Array(FAV_SLOTS).fill(null),
+    };
+
+    // ── Audio engine ─────────────────────────────────────────────────────────
+
+    const Audio = (() => {
+      let ctx        = null;
+      let osc        = null;
+      let gain       = null;
+      let wakeLock   = null;
+
+      function ensureCtx() {
+        if (ctx) return;
+        ctx  = new (window.AudioContext || window.webkitAudioContext)();
+        gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+        gain.connect(ctx.destination);
+      }
+
+      async function start(freq) {
+        ensureCtx();
+        if (ctx.state === 'suspended') await ctx.resume();
+        if (osc) { osc.disconnect(); osc = null; }
+        osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        osc.connect(gain);
+        gain.gain.cancelScheduledValues(ctx.currentTime);
+        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+        osc.start();
+        // Request screen wake lock so tablet doesn't dim mid-demo
+        if ('wakeLock' in navigator) {
+          try { wakeLock = await navigator.wakeLock.request('screen'); } catch (_) {}
+        }
+      }
+
+      function stop() {
+        if (!osc || !ctx) return;
+        const t = ctx.currentTime;
+        gain.gain.setValueAtTime(gain.gain.value, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+        osc.stop(t + 0.06);
+        osc = null;
+        if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+      }
+
+      function setFrequency(freq) {
+        if (!osc || !ctx) return;
+        osc.frequency.setTargetAtTime(freq, ctx.currentTime, 0.008);
+      }
+
+      return { start, stop, setFrequency };
+    })();
+
+    // ── Scale helpers ─────────────────────────────────────────────────────────
+
+    function sliderToFreq(v) {
+      const t = v / SLIDER_MAX;
+      return Math.round(FREQ_MIN * Math.pow(FREQ_MAX / FREQ_MIN, t));
+    }
+
+    function freqToSlider(f) {
+      const t = Math.log(f / FREQ_MIN) / Math.log(FREQ_MAX / FREQ_MIN);
+      return Math.round(t * SLIDER_MAX);
+    }
+
+    function formatFreq(hz) {
+      return String(hz) + ' Hz';
+    }
+
+    // ── DOM refs ──────────────────────────────────────────────────────────────
+
+    const freqReadout  = document.getElementById('freq-readout');
+    const freqUnit     = document.getElementById('freq-unit');
+    const freqSlider   = document.getElementById('freq-slider');
+    const display      = document.getElementById('display');
+    const playLabel    = document.getElementById('play-label');
+    const favsRow      = document.getElementById('favourites-row');
+    const btnOctDown   = document.getElementById('btn-oct-down');
+    const btnStepDown  = document.getElementById('btn-step-down');
+    const btnStepUp    = document.getElementById('btn-step-up');
+    const btnOctUp     = document.getElementById('btn-oct-up');
+
+    let favBtns = [];
+
+    // ── setFrequency — central update ─────────────────────────────────────────
+
+    function setFrequency(freq) {
+      freq = Math.max(FREQ_MIN, Math.min(FREQ_MAX, Math.round(freq)));
+      state.freq = freq;
+
+      // Slider
+      freqSlider.value = freqToSlider(freq);
+      updateSliderFill();
+
+      // Display
+      freqReadout.textContent = freq;
+      freqUnit.textContent    = 'Hz';
+
+      // Audio
+      if (state.playing) Audio.setFrequency(freq);
+
+      // Favourites highlights
+      renderFavourites();
+
+      // Octave button limits
+      btnOctDown.disabled = freq <= FREQ_MIN;
+      btnOctUp.disabled   = freq >= FREQ_MAX;
+    }
+
+    function updateSliderFill() {
+      const pct = (freqSlider.value / SLIDER_MAX * 100).toFixed(2) + '%';
+      freqSlider.style.setProperty('--fill-pct', pct);
+    }
+
+    // ── Favourites ────────────────────────────────────────────────────────────
+
+    function getSorted() {
+      return state.favourites.filter(f => f !== null).sort((a, b) => a - b);
+    }
+
+    function addFavourite(freq) {
+      if (state.favourites.includes(freq)) return;
+      const idx = state.favourites.indexOf(null);
+      if (idx !== -1) state.favourites[idx] = freq;
+    }
+
+    function removeFavourite(freq) {
+      const idx = state.favourites.indexOf(freq);
+      if (idx !== -1) state.favourites[idx] = null;
+    }
+
+    function persistFavourites() {
+      try { localStorage.setItem(LS_KEY, JSON.stringify(state.favourites)); } catch (_) {}
+    }
+
+    function loadFavourites() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length === FAV_SLOTS) {
+          state.favourites = parsed.map(v =>
+            (typeof v === 'number' && v >= FREQ_MIN && v <= FREQ_MAX) ? Math.round(v) : null
+          );
+        }
+      } catch (_) {}
+    }
+
+    function renderFavourites() {
+      const sorted = getSorted();
+      favBtns.forEach((btn, i) => {
+        const freq = sorted[i] ?? null;
+        btn.dataset.freq = freq ?? '';
+        const starEl = btn.querySelector('.fav-star');
+        const freqEl = btn.querySelector('.fav-freq');
+        if (freq !== null) {
+          starEl.textContent  = '★';
+          freqEl.textContent  = formatFreq(freq);
+          freqEl.style.display = '';
+        } else {
+          starEl.textContent  = '☆';
+          freqEl.style.display = 'none';
+        }
+        btn.classList.toggle('set',    freq !== null);
+        btn.classList.toggle('active', freq !== null && freq === state.freq);
+      });
+    }
+
+    function buildFavouriteButtons() {
+      for (let i = 0; i < FAV_SLOTS; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'fav-btn';
+        btn.setAttribute('aria-label', `Preset ${i + 1}`);
+        btn.innerHTML = `
+          <span class="fav-star">☆</span>
+          <span class="fav-freq"></span>
+          <span class="hold-bar"></span>
+        `;
+        wireFavButton(btn, i);
+        favsRow.appendChild(btn);
+        favBtns.push(btn);
+      }
+    }
+
+    function wireFavButton(btn, i) {
+      let holdTimer = null;
+
+      function getSlotFreq() {
+        return getSorted()[i] ?? null;
+      }
+
+      function cancelHold() {
+        if (holdTimer !== null) {
+          clearTimeout(holdTimer);
+          holdTimer = null;
+        }
+        btn.classList.remove('holding');
+      }
+
+      btn.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        btn.setPointerCapture(e.pointerId);
+        btn.classList.add('holding');
+
+        holdTimer = setTimeout(() => {
+          holdTimer = null;
+          btn.classList.remove('holding');
+
+          const slotFreq = getSlotFreq();
+
+          if (slotFreq === state.freq) {
+            // Current freq is in this slot — clear it
+            removeFavourite(slotFreq);
+          } else {
+            // Overwrite whatever's in this positional slot with current freq
+            if (slotFreq !== null) removeFavourite(slotFreq);
+            addFavourite(state.freq);
+            btn.classList.remove('saved');
+            void btn.offsetWidth; // reflow to restart animation
+            btn.classList.add('saved');
+          }
+
+          persistFavourites();
+          renderFavourites();
+        }, HOLD_MS);
+      });
+
+      btn.addEventListener('pointerup', e => {
+        if (holdTimer !== null) {
+          // Short press — recall
+          cancelHold();
+          const slotFreq = getSlotFreq();
+          if (slotFreq !== null) setFrequency(slotFreq);
+        }
+      });
+
+      btn.addEventListener('pointercancel', cancelHold);
+      btn.addEventListener('contextmenu',   e => e.preventDefault());
+    }
+
+    // ── Play / Stop ───────────────────────────────────────────────────────────
+
+    function updatePlayState() {
+      display.classList.toggle('playing', state.playing);
+      playLabel.textContent = state.playing ? 'STOP' : 'PLAY';
+      display.setAttribute('aria-label', state.playing ? 'Stop tone' : 'Play tone');
+    }
+
+    display.addEventListener('click', async () => {
+      if (state.playing) {
+        Audio.stop();
+        state.playing = false;
+      } else {
+        await Audio.start(state.freq);
+        state.playing = true;
+      }
+      updatePlayState();
+    });
+
+    display.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); display.click(); }
+    });
+
+    // Resume audio context on visibility restore (mobile tab switch)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && state.playing) {
+        Audio.start(state.freq);
+      }
+    });
+
+    // ── Slider ────────────────────────────────────────────────────────────────
+
+    freqSlider.addEventListener('input', () => {
+      setFrequency(sliderToFreq(Number(freqSlider.value)));
+    });
+
+    // Override arrow-key behaviour for 1 Hz steps
+    freqSlider.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setFrequency(e.shiftKey ? state.freq * 2 : state.freq + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setFrequency(e.shiftKey ? Math.round(state.freq / 2) : state.freq - 1);
+      }
+    });
+
+    // ── Nudge buttons ─────────────────────────────────────────────────────────
+
+    // << >> are simple clicks
+    btnOctDown.addEventListener('click', () => setFrequency(Math.round(state.freq / 2)));
+    btnOctUp.addEventListener('click',   () => setFrequency(state.freq * 2));
+
+    // < > support press-and-hold with accelerating repeat
+    function wireStepButton(btn, delta) {
+      let rafId     = null;
+      let startTime = null;
+
+      function step() {
+        setFrequency(state.freq + delta);
+        // Accelerate: starts at ~6 steps/s, reaches ~30 steps/s after 2 seconds
+        const elapsed = Date.now() - startTime;
+        const interval = Math.max(33, 160 - elapsed * 0.06);
+        rafId = setTimeout(step, interval);
+      }
+
+      function start(e) {
+        e.preventDefault();
+        setFrequency(state.freq + delta); // immediate first step
+        startTime = Date.now();
+        rafId = setTimeout(step, 400);    // dwell delay before repeat begins
+      }
+
+      function stop() {
+        clearTimeout(rafId);
+        rafId = null;
+      }
+
+      btn.addEventListener('pointerdown', start);
+      btn.addEventListener('pointerup',   stop);
+      btn.addEventListener('pointerleave', stop);
+      btn.addEventListener('pointercancel', stop);
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+    }
+
+    wireStepButton(btnStepDown, -1);
+    wireStepButton(btnStepUp,   +1);
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+
+    loadFavourites();
+    buildFavouriteButtons();
+    setFrequency(440);
+  </script>
+</body>
+</html>
